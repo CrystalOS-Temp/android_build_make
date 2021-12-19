@@ -317,7 +317,10 @@ FIND_LEAVES_EXCLUDES := $(addprefix --prune=, $(SCAN_EXCLUDE_DIRS) .repo .git)
 
 -include vendor/extra/BoardConfigExtra.mk
 ifneq ($(CRYSTAL_BUILD),)
-include vendor/crystal/config/BoardConfigCrystal.mk
+  ifneq ($(wildcard ./system/core/build/BuildTypeDetected.mk),)
+    include system/core/build/BuildTypeDetected.mk
+    include vendor/crystal/config/BoardConfigCrystal.mk
+  endif
 endif
 
 # The build system exposes several variables for where to find the kernel
