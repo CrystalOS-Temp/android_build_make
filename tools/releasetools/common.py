@@ -552,6 +552,15 @@ class BuildInfo(object):
 
     raise ExternalError("couldn't find %s in build.prop" % (prop,))
 
+  def CheckIfPropExists(self, prop):
+    exists = False
+    prop_val = self._GetRawBuildProp(prop, None)
+    if prop_val is None:
+      return exists
+    else:
+      exists = True
+      return exists
+
   def _ResolveRoProductBuildProp(self, prop):
     """Resolves the inquired ro.product.* build property"""
     prop_val = self._GetRawBuildProp(prop, None)

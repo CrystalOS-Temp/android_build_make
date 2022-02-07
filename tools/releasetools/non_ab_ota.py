@@ -210,10 +210,70 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
     # Stage 3/3: Make changes.
     script.Comment("Stage 3/3")
 
-  # Dump fingerprints
-  script.Print("Target: {}".format(target_info.fingerprint))
+  if target_info.CheckIfPropExists("ro.product.marketname")==True:
+    # Dump fingerprints
+    script.Print("Target: {}".format(target_info.fingerprint))
 
-  device_specific.FullOTA_InstallBegin()
+    android_version = target_info.GetBuildProp("ro.build.version.release")
+    build_id = target_info.GetBuildProp("ro.build.id")
+    build_date = target_info.GetBuildProp("ro.build.date")
+    security_patch = target_info.GetBuildProp("ro.build.version.security_patch")
+    codename = target_info.GetBuildProp("ro.product.device")
+    marketname = target_info.GetBuildProp("ro.product.marketname")
+
+    script.Print("=================================================");
+    script.Print("");
+    script.Print(" .d8888b.   .d88888b.   .d8888b.  ");
+    script.Print("d88P  Y88b d88P' 'Y88b d88P  Y88b ");
+    script.Print("888    888 888     888 Y88b.      ");
+    script.Print("888        888     888  'Y888b.   ");
+    script.Print("888        888     888     'Y88b. ");
+    script.Print("888    888 888     888       '888 ");
+    script.Print("Y88b  d88P Y88b. .d88P Y88b  d88P ");
+    script.Print(" 'Y8888P'   'Y88888P'   'Y8888P'  ");
+    script.Print("");
+    script.Print("=================================================");
+    script.Print(" Android version  : %s"%(android_version));
+    script.Print(" Build id         : %s"%(build_id));
+    script.Print(" Build date       : %s"%(build_date));
+    script.Print(" Security patch   : %s"%(security_patch));
+    script.Print(" Device codename  : %s"%(codename));
+    script.Print(" Device name      : %s"%(marketname));
+    script.Print("=================================================");
+
+    device_specific.FullOTA_InstallBegin()
+  else:
+    # Dump fingerprints
+    script.Print("Target: {}".format(target_info.fingerprint))
+
+    android_version = target_info.GetBuildProp("ro.build.version.release")
+    build_id = target_info.GetBuildProp("ro.build.id")
+    build_date = target_info.GetBuildProp("ro.build.date")
+    security_patch = target_info.GetBuildProp("ro.build.version.security_patch")
+    codename = target_info.GetBuildProp("ro.product.device")
+    model = target_info.GetBuildProp("ro.product.model")
+
+    script.Print("=================================================");
+    script.Print("");
+    script.Print(" .d8888b.   .d88888b.   .d8888b.  ");
+    script.Print("d88P  Y88b d88P' 'Y88b d88P  Y88b ");
+    script.Print("888    888 888     888 Y88b.      ");
+    script.Print("888        888     888  'Y888b.   ");
+    script.Print("888        888     888     'Y88b. ");
+    script.Print("888    888 888     888       '888 ");
+    script.Print("Y88b  d88P Y88b. .d88P Y88b  d88P ");
+    script.Print(" 'Y8888P'   'Y88888P'   'Y8888P'  ");
+    script.Print("");
+    script.Print("=================================================");
+    script.Print(" Android version  : %s"%(android_version));
+    script.Print(" Build id         : %s"%(build_id));
+    script.Print(" Build date       : %s"%(build_date));
+    script.Print(" Security patch   : %s"%(security_patch));
+    script.Print(" Device codename  : %s"%(codename));
+    script.Print(" Device name      : %s"%(model));
+    script.Print("=================================================");
+
+    device_specific.FullOTA_InstallBegin()
 
   CopyInstallTools(output_zip)
   script.UnpackPackageDir("install", "/tmp/install")
