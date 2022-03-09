@@ -3513,6 +3513,8 @@ def MakeRecoveryPatch(input_dir, output_sink, recovery_img, boot_img,
     output_sink(recovery_img_path, recovery_img.data)
 
   else:
+    system_root_image = info_dict.get("system_root_image") == "true"
+    path = os.path.join(input_dir, recovery_resource_dat_path)
     diff_program = ["bsdiff"]
     bonus_args = ""
 
